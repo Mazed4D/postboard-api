@@ -29,6 +29,7 @@ const connectDB = require('./database/connect');
 const authRouter = require('./routes/auth');
 const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts.js');
+const likesRouter = require('./routes/like');
 
 // error handlers
 const notFoundMiddleware = require('./middleware/not-found');
@@ -50,6 +51,7 @@ app.use(cookieParser());
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/posts', postsRouter);
 app.use('/api/v1/users', usersRouter);
+app.use('/api/v1/likes', likesRouter);
 
 // error middleware
 app.use(notFoundMiddleware);
