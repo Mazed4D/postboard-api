@@ -1,5 +1,9 @@
-const post = async (req, res) => {
+const addPost = async (req, res) => {
 	console.log('post route');
+};
+
+const fetchPost = async (req, res) => {
+	console.log('fetch post');
 };
 
 const fetchPosts = async (req, res) => {
@@ -11,7 +15,8 @@ const fetchPostsByUser = async (req, res) => {
 };
 
 module.exports = {
-	post,
+	addPost,
+	fetchPost,
 	fetchPosts,
 	fetchPostsByUser,
 };
