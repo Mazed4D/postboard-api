@@ -1,20 +1,14 @@
 const { Router } = require('express');
 const jwt = require('express-jwt');
-const { addLike, removeLike, fetchLikes } = require('../controllers/likes');
+const { toggleLike, fetchLikes } = require('../controllers/likes');
 
 const router = Router();
 
 router
-	.route('/add/:id')
+	.route('/toggle/:id')
 	.post(
 		jwt({ secret: process.env.JWT_SECRET, algorithms: ['HS256'] }),
-		addLike
-	);
-router
-	.route('/remove/:id')
-	.post(
-		jwt({ secret: process.env.JWT_SECRET, algorithms: ['HS256'] }),
-		removeLike
+		toggleLike
 	);
 router
 	.route('/:id')
