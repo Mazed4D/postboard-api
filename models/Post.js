@@ -7,6 +7,10 @@ const PostSchema = new Schema(
 			ref: 'User',
 			required: [true, 'Please provide user'],
 		},
+		name: {
+			type: String,
+			required: [true, 'Please provide name of the user'],
+		},
 		text: {
 			type: String,
 			required: [true, 'Please provide post text'],

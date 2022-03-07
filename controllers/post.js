@@ -3,6 +3,7 @@ const Post = require('../models/Post');
 const addPost = async (req, res) => {
 	const post = new Post({
 		user: req.user.userId,
+		name: req.user.name,
 		text: req.body.text,
 	});
 	const result = await post.save();
