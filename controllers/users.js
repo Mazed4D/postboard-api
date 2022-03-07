@@ -1,5 +1,12 @@
+const User = require('../models/User');
+
 const fetchUsers = async (req, res) => {
 	console.log('post route');
+};
+
+const fetchUserName = async (req, res) => {
+	const { name } = await User.findById(req.params.id);
+	res.status(200).json({ name });
 };
 
 const fetchPost = async (req, res) => {
@@ -15,7 +22,8 @@ const fetchPostsByUser = async (req, res) => {
 };
 
 module.exports = {
-	addPost,
+	fetchUserName,
+	fetchUsers,
 	fetchPost,
 	fetchPosts,
 	fetchPostsByUser,
