@@ -16,7 +16,10 @@ const fetchPost = async (req, res) => {
 };
 
 const fetchPosts = async (req, res) => {
-	const posts = await Post.find();
+	const query = req.query;
+	const page = query.page || 1;
+	const skipNum = page * 4 - 4;
+	const posts = await Post.find().sort('-createdAt').skip(skipNum).limit(4);
 	res.json(posts);
 };
 
