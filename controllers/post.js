@@ -26,8 +26,16 @@ const fetchPosts = async (req, res) => {
 };
 
 const fetchPostsByUser = async (req, res) => {
-	const posts = await Post.find({ user: req.params.id });
-	res.status(200).json(posts);
+	const query = req.query;
+	const page = query.page || 1;
+	const skipNum = page * 4 - 4;
+	const posts = await Post.find({ user: req.params.id })
+		.sort('-createdAt')
+		.skip(skipNum)
+		.limit(4);
+	const totalPosts = await Post.countDocuments();
+	const postIds = posts.map((post) => post.id);
+	res.status(200).json({ postIds, totalPosts });
 };
 
 module.exports = {
