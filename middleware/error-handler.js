@@ -7,7 +7,11 @@ const errorHandlerMiddleware = (err, req, res, next) => {
 		msg: err.message || 'Something went wrong try again later',
 	};
 
-	if (err.name === 'CastError') {
+	console.log(err.name);
+	if (err.name === 'UnauthorizedError') {
+		customError.msg = 'Invalid token';
+		customError.statusCode = 401;
+	} else if (err.name === 'CastError') {
 		customError.msg = `No item found with id of ${err.value}`;
 		customError.statusCode = 404;
 	} else if ((err.name = 'ValidationError')) {
