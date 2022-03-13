@@ -40,7 +40,7 @@ const errorHandlerMiddleware = require('./middleware/error-handler');
 app.use(helmet());
 app.use(cors());
 app.use(xss());
-app.use(rateLimit({ windowsMs: 60 * 1000, max: 60 }));
+app.use(rateLimit({ windowsMs: 60 * 1000, max: 200 }));
 
 // middleware
 app.use(logger('dev'));
