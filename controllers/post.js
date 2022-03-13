@@ -33,7 +33,7 @@ const fetchPostsByUser = async (req, res) => {
 		.sort('-createdAt')
 		.skip(skipNum)
 		.limit(4);
-	const totalPosts = await Post.countDocuments();
+	const totalPosts = await Post.countDocuments({ user: req.params.id });
 	const postIds = posts.map((post) => post.id);
 	res.status(200).json({ postIds, totalPosts });
 };
