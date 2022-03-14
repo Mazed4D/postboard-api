@@ -16,11 +16,6 @@ const PostSchema = new Schema(
 			required: [true, 'Please provide post text'],
 			maxlength: 280,
 		},
-		likes: {
-			type: [Types.ObjectId],
-			ref: 'User',
-		},
-		comments: [{ body: String, type: [Types.ObjectId], ref: 'User' }],
 	},
 	{ timestamps: true }
 );
