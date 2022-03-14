@@ -15,6 +15,7 @@ require('express-async-errors');
 // package imports
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const fileUpload = require('express-fileupload');
 
 // security packages
 const helmet = require('helmet');
@@ -31,12 +32,14 @@ const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts.js');
 const likesRouter = require('./routes/like');
 const commentsRouter = require('./routes/comment');
+const uploadRoute = require('./routes/upload');
 
 // error handlers
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 
 // security middleware
+app.use(express.static('public'));
 app.use(helmet());
 app.use(cors());
 app.use(xss());
@@ -47,6 +50,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(fileUpload());
 
 // routes
 app.use('/api/v1/auth', authRouter);
@@ -54,6 +58,7 @@ app.use('/api/v1/posts', postsRouter);
 app.use('/api/v1/users', usersRouter);
 app.use('/api/v1/likes', likesRouter);
 app.use('/api/v1/comments', commentsRouter);
+app.use('/api/v1/upload', uploadRoute);
 
 // error middleware
 app.use(notFoundMiddleware);
