@@ -7,6 +7,11 @@ const CommentSchema = new Schema(
 			ref: 'User',
 			required: [true, 'Please provide user ID'],
 		},
+		username: {
+			type: String,
+			required: [true, 'Please provide user'],
+			maxlength: 100,
+		},
 		post: {
 			type: Types.ObjectId,
 			ref: 'Post',
@@ -15,7 +20,7 @@ const CommentSchema = new Schema(
 		text: {
 			type: String,
 			required: [true, 'Please provide comment text'],
-			maxlength: 140,
+			maxlength: 280,
 		},
 	},
 	{ timestamps: true }

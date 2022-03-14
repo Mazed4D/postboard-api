@@ -4,6 +4,7 @@ const Comment = require('../models/Comments');
 const addComment = async (req, res) => {
 	const comment = new Comment({
 		user: req.user.userId,
+		username: req.user.name,
 		post: req.params.id,
 		text: req.body.text,
 	});
