@@ -2,9 +2,17 @@ const Picture = require('../models/Picture');
 const path = require('path');
 const { UnauthorizedError } = require('express-jwt/lib');
 
+const acceptedMimeTypes = ['image/png', 'image/jpg', 'image/jpeg'];
+
 const addProfilePicture = async (req, res) => {
 	const { userId } = req.params;
 	const profilePicture = req.files.profilePicture;
+	if (profilePicture.size > 2097152) {
+		return res.status(400).json({ msg: 'file larger than 2MB' });
+	}
+	if (!acceptedMimeTypes.includes(profilePicture.mimetype)) {
+		return res.status(400).json({ msg: 'file is not jpg, jpeg or png' });
+	}
 	const uploadPath = path.join(
 		__dirname +
 			'/../' +
