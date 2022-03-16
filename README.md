@@ -13,3 +13,7 @@ In the root folder make an .env file with the following variables:
 > JWT_SECRET={random JWT secret key}
 
 > JWT_LIFETIME={lifetime of tokens, example: 7d}
+
+## Routes
+
+To be written...
