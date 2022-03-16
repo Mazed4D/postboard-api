@@ -33,6 +33,7 @@ const postsRouter = require('./routes/posts.js');
 const likesRouter = require('./routes/like');
 const commentsRouter = require('./routes/comment');
 const uploadRoute = require('./routes/upload');
+const followRoute = require('./routes/follow');
 
 // error handlers
 const notFoundMiddleware = require('./middleware/not-found');
@@ -59,6 +60,7 @@ app.use('/api/v1/users', usersRouter);
 app.use('/api/v1/likes', likesRouter);
 app.use('/api/v1/comments', commentsRouter);
 app.use('/api/v1/upload', uploadRoute);
+app.use('/api/v1/follow', followRoute);
 
 // error middleware
 app.use(notFoundMiddleware);
