@@ -57,7 +57,7 @@ const fetchPostsByFollowedUsers = async (req, res) => {
 
 const deletePost = async (req, res) => {
 	const post = await Post.findById(req.params.id);
-	if (post.user !== req.user.userId) {
+	if (post.user != req.user.userId) {
 		return res.status(401).json({ msg: 'unauthorized' });
 	}
 	await Post.findByIdAndDelete(req.params.id);
