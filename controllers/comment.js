@@ -43,9 +43,10 @@ const fetchComments = async (req, res) => {
 
 const deleteComment = async (req, res) => {
 	const comment = await Comment.findById(req.params.commentId);
-	if (req.user.userId !== comment.user) {
-		res.status(401).json({ msg: 'unauthorized' });
+	if (req.user.userId != comment.user) {
+		return res.status(401).json({ msg: 'unauthorized' });
 	}
+	await Comment.findByIdAndDelete(req.params.commentId);
 	res.status(200).json({ msg: 'deleted' });
 };
 
