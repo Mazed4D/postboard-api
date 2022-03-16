@@ -4,6 +4,7 @@ const {
 	addComment,
 	editComment,
 	fetchComments,
+	deleteComment,
 } = require('../controllers/comment');
 
 const router = Router();
@@ -16,10 +17,14 @@ router
 		addComment
 	);
 router
-	.route('/:id')
+	.route('/:commentId')
 	.patch(
 		jwt({ secret: process.env.JWT_SECRET, algorithms: ['HS256'] }),
 		editComment
+	)
+	.delete(
+		jwt({ secret: process.env.JWT_SECRET, algorithms: ['HS256'] }),
+		deleteComment
 	);
 
 module.exports = router;

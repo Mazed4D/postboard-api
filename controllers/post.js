@@ -1,5 +1,6 @@
 const Post = require('../models/Post');
 const Followed = require('../models/Followed');
+const { StatusCodes } = require('http-status-codes');
 
 const addPost = async (req, res) => {
 	console.log(req.body);
@@ -54,10 +55,20 @@ const fetchPostsByFollowedUsers = async (req, res) => {
 	res.json({ postIds, totalPosts });
 };
 
+const deletePost = async (req, res) => {
+	const post = await Post.findById(req.params.id);
+	if (post.user !== req.user.userId) {
+		return res.status(401).json({ msg: 'unauthorized' });
+	}
+	await Post.findByIdAndDelete(req.params.id);
+	res.status(200).json({ msg: 'deleted' });
+};
+
 module.exports = {
 	addPost,
 	fetchPost,
 	fetchPosts,
 	fetchPostsByUser,
 	fetchPostsByFollowedUsers,
+	deletePost,
 };

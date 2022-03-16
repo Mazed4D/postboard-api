@@ -41,8 +41,17 @@ const fetchComments = async (req, res) => {
 	res.status(200).json(comments);
 };
 
+const deleteComment = async (req, res) => {
+	const comment = await Comment.findById(req.params.commentId);
+	if (req.user.userId !== comment.user) {
+		res.status(401).json({ msg: 'unauthorized' });
+	}
+	res.status(200).json({ msg: 'deleted' });
+};
+
 module.exports = {
 	addComment,
 	editComment,
 	fetchComments,
+	deleteComment,
 };
