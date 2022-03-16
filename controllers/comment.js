@@ -13,7 +13,7 @@ const addComment = async (req, res) => {
 };
 
 const editComment = async (req, res) => {
-	const isComment = await Comment.findById(req.params.id);
+	const isComment = await Comment.findById(req.params.commentId);
 	if (!isComment) {
 		return res.status(404).json({ msg: 'comment doesnt exist' });
 	}
@@ -24,7 +24,7 @@ const editComment = async (req, res) => {
 		text: req.body.text,
 	};
 	const editedComment = await Comment.findByIdAndUpdate(
-		req.params.id,
+		req.params.commentId,
 		comment,
 		{
 			new: true,
