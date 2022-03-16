@@ -1,4 +1,5 @@
 const Post = require('../models/Post');
+const Followed = require('../models/Followed');
 
 const addPost = async (req, res) => {
 	console.log(req.body);
@@ -39,9 +40,24 @@ const fetchPostsByUser = async (req, res) => {
 	res.status(200).json({ postIds, totalPosts });
 };
 
+const fetchPostsByFollowedUsers = async (req, res) => {
+	const query = req.query;
+	const page = query.page || 1;
+	const skipNum = page * 4 - 4;
+	const { follows } = await Followed.findOne({ user: req.user.userId });
+	const posts = await Post.find({ user: { $in: follows } })
+		.sort('-createdAt')
+		.skip(skipNum)
+		.limit(4);
+	const totalPosts = await Post.countDocuments({ user: { $in: follows } });
+	const postIds = posts.map((post) => post.id);
+	res.json({ postIds, totalPosts });
+};
+
 module.exports = {
 	addPost,
 	fetchPost,
 	fetchPosts,
 	fetchPostsByUser,
+	fetchPostsByFollowedUsers,
 };

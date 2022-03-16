@@ -5,6 +5,7 @@ const {
 	fetchPost,
 	fetchPosts,
 	fetchPostsByUser,
+	fetchPostsByFollowedUsers,
 } = require('../controllers/post');
 
 const router = Router();
@@ -13,6 +14,12 @@ router
 	.route('/')
 	.post(jwt({ secret: process.env.JWT_SECRET, algorithms: ['HS256'] }), addPost)
 	.get(fetchPosts);
+router
+	.route('/followed')
+	.get(
+		jwt({ secret: process.env.JWT_SECRET, algorithms: ['HS256'] }),
+		fetchPostsByFollowedUsers
+	);
 router
 	.route('/:id')
 	.get(
