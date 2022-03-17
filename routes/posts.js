@@ -7,6 +7,7 @@ const {
 	fetchPostsByUser,
 	fetchPostsByFollowedUsers,
 	deletePost,
+	editPost,
 } = require('../controllers/post');
 
 const router = Router();
@@ -30,6 +31,10 @@ router
 	.delete(
 		jwt({ secret: process.env.JWT_SECRET, algorithms: ['HS256'] }),
 		deletePost
+	)
+	.patch(
+		jwt({ secret: process.env.JWT_SECRET, algorithms: ['HS256'] }),
+		editPost
 	);
 router
 	.route('/user/:id')
