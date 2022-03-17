@@ -45,14 +45,26 @@ const fetchPostsByFollowedUsers = async (req, res) => {
 	const query = req.query;
 	const page = query.page || 1;
 	const skipNum = page * 4 - 4;
-	const { follows } = await Followed.findOne({ user: req.user.userId });
-	const posts = await Post.find({ user: { $in: follows } })
-		.sort('-createdAt')
-		.skip(skipNum)
-		.limit(4);
-	const totalPosts = await Post.countDocuments({ user: { $in: follows } });
-	const postIds = posts.map((post) => post.id);
-	res.json({ postIds, totalPosts });
+	try {
+		const { follows } = await Followed.findOne({ user: req.user.userId });
+		follows.push(req.user.userId);
+		const posts = await Post.find({ user: { $in: follows } })
+			.sort('-createdAt')
+			.skip(skipNum)
+			.limit(4);
+		const totalPosts = await Post.countDocuments({ user: { $in: follows } });
+		const postIds = posts.map((post) => post.id);
+		res.status(200).json({ postIds, totalPosts });
+	} catch (error) {
+		const follows = [req.user.userId];
+		const posts = await Post.find({ user: { $in: follows } })
+			.sort('-createdAt')
+			.skip(skipNum)
+			.limit(4);
+		const totalPosts = await Post.countDocuments({ user: { $in: follows } });
+		const postIds = posts.map((post) => post.id);
+		res.status(200).json({ postIds, totalPosts });
+	}
 };
 
 const deletePost = async (req, res) => {
