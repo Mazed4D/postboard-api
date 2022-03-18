@@ -44,7 +44,6 @@ const fetchFollowCount = async (req, res) => {
 	const follows = await Followed.findOne({ user: req.params.userId });
 	const followsCount = await follows.follows.length;
 	const followers = await Followed.find({ follows: req.params.userId });
-	console.log(followers);
 	const followerCount = await followers.length;
 	res.status(200).json({ followerCount, followsCount });
 };
