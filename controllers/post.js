@@ -76,6 +76,16 @@ const deletePost = async (req, res) => {
 	res.status(200).json({ msg: 'deleted' });
 };
 
+const editPost = async (req, res) => {
+	const post = await Post.findById(req.params.id);
+	if (post.user != req.user.userId) {
+		return res.status(401).json({ msg: 'unauthorized' });
+	}
+	post.text = req.body.text;
+	const editedPost = await post.save();
+	res.status(200).json(editedPost);
+};
+
 module.exports = {
 	addPost,
 	fetchPost,
@@ -83,4 +93,5 @@ module.exports = {
 	fetchPostsByUser,
 	fetchPostsByFollowedUsers,
 	deletePost,
+	editPost,
 };
