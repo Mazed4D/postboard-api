@@ -26,7 +26,7 @@ const fetchPosts = async (req, res) => {
 	const totalPosts = await Post.countDocuments();
 	const postIds = posts.map((post) => post.id);
 	const newPostIds = posts.map((post) => {
-		return { [post.id]: post.updatedAt };
+		return { postId: post.id, updatedAt: post.updatedAt };
 	});
 	res.json({ postIds, totalPosts, newPostIds });
 };
@@ -42,7 +42,7 @@ const fetchPostsByUser = async (req, res) => {
 	const totalPosts = await Post.countDocuments({ user: req.params.id });
 	const postIds = posts.map((post) => post.id);
 	const newPostIds = posts.map((post) => {
-		return { [post.id]: post.updatedAt };
+		return { postId: post.id, updatedAt: post.updatedAt };
 	});
 	res.json({ postIds, totalPosts, newPostIds });
 };
@@ -61,7 +61,7 @@ const fetchPostsByFollowedUsers = async (req, res) => {
 		const totalPosts = await Post.countDocuments({ user: { $in: follows } });
 		const postIds = posts.map((post) => post.id);
 		const newPostIds = posts.map((post) => {
-			return { [post.id]: post.updatedAt };
+			return { postId: post.id, updatedAt: post.updatedAt };
 		});
 		res.json({ postIds, totalPosts, newPostIds });
 	} catch (error) {
@@ -73,7 +73,7 @@ const fetchPostsByFollowedUsers = async (req, res) => {
 		const totalPosts = await Post.countDocuments({ user: { $in: follows } });
 		const postIds = posts.map((post) => post.id);
 		const newPostIds = posts.map((post) => {
-			return { [post.id]: post.updatedAt };
+			return { postId: post.id, updatedAt: post.updatedAt };
 		});
 		res.json({ postIds, totalPosts, newPostIds });
 	}
