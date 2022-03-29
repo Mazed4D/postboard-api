@@ -25,10 +25,8 @@ const fetchPosts = async (req, res) => {
 	const posts = await Post.find().sort('-createdAt').skip(skipNum).limit(4);
 	const totalPosts = await Post.countDocuments();
 	const postIds = posts.map((post) => post.id);
-	const newPostIds = posts.map((post) => {
-		return { [post.id]: post.updatedAt };
-	});
-	res.json({ postIds, totalPosts, newPostIds });
+	const postDates = posts.map((post) => post.updatedAt);
+	res.json({ postIds, totalPosts, postDates });
 };
 
 const fetchPostsByUser = async (req, res) => {
