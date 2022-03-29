@@ -39,7 +39,8 @@ const fetchPostsByUser = async (req, res) => {
 		.limit(4);
 	const totalPosts = await Post.countDocuments({ user: req.params.id });
 	const postIds = posts.map((post) => post.id);
-	res.status(200).json({ postIds, totalPosts });
+	const postDates = posts.map((post) => post.updatedAt);
+	res.status(200).json({ postIds, totalPosts, postDates });
 };
 
 const fetchPostsByFollowedUsers = async (req, res) => {
@@ -55,7 +56,8 @@ const fetchPostsByFollowedUsers = async (req, res) => {
 			.limit(4);
 		const totalPosts = await Post.countDocuments({ user: { $in: follows } });
 		const postIds = posts.map((post) => post.id);
-		res.status(200).json({ postIds, totalPosts });
+		const postDates = posts.map((post) => post.updatedAt);
+		res.status(200).json({ postIds, totalPosts, postDates });
 	} catch (error) {
 		const follows = [req.user.userId];
 		const posts = await Post.find({ user: { $in: follows } })
@@ -64,7 +66,8 @@ const fetchPostsByFollowedUsers = async (req, res) => {
 			.limit(4);
 		const totalPosts = await Post.countDocuments({ user: { $in: follows } });
 		const postIds = posts.map((post) => post.id);
-		res.status(200).json({ postIds, totalPosts });
+		const postDates = posts.map((post) => post.updatedAt);
+		res.status(200).json({ postIds, totalPosts, postDates });
 	}
 };
 
